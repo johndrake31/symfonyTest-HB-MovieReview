@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Movies index
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row p-5">
+			{% for movie in movies %}
+				<div class="col-3">
+					<h4>{{movie.name}}</h4>
+					<h6>{{movie.director}}</h6>
+					<p>{{movie.summary}}</p>
+					<p>{{movie.releaseyear|date('d-m-Y')}}</p>
+					<a href="{{path('show_movie', {id: movie.id})}}" class="btn btn-sm btn-info">More</a>
+
+
+				</div>
+			{% endfor %}
+
+		</div>
+	</div>
+{% endblock %}

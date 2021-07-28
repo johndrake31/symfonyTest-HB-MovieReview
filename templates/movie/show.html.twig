@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{movie.name}}
+{% endblock %}
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<div class="row p-5">
+			<div class="col-5 border border-4 border-dark p-3">
+
+				<h3>{{movie.name}}</h3>
+				<h6>{{movie.director}}</h6>
+				<p>{{movie.summary}}</p>
+				<p>{{movie.releaseyear|date('d-m-Y')}}</p>
+				{% if app.user %}
+					{% if app.user.username == username %}
+
+						<a href="{{path('edit_movie', {id: movie.id}) }}" class="btn btn-sm btn-warning m-1">Edit Film</a>
+						<a href="{{path('delete_movie', {id: movie.id}) }}" class="btn btn-sm btn-danger m-1">Delete Film</a>
+					{% endif %}
+				{% endif %}
+
+
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row p-5">
+			<h2 class="text-center mb-5 text-secondary">Impressions</h2>
+			<div class="col-10 border border-4 border-primary m-2 mb-3 p-4">
+
+
+				{{form_start(form)}}
+
+				{{form_row(form.content)}}
+				{{form_row(form.createdAt)}}
+
+				<button class="btn btn-success" type="submit">
+					Add Impression
+				</button>
+
+
+				{{form_end(form)}}
+
+			</div>
+
+			{% for impression in impressions %}
+				<div class="col-5 border border-2 border-success me-1 mb-1">
+					<h5>{{impression.content}}</h5>
+					<p>{{impression.createdAt|date('d-m-Y')}}</p>
+					<a href="{{path('edit_impression', {id: impression.id})}}" class="btn btn-sm btn-warning m-1">Edit Impression</a>
+
+					<a href="{{path('delete_impression', {id: impression.id} )}}" class="btn btn-sm btn-danger m-1">Delete Impression</a>
+
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+{% endblock %}
